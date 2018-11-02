@@ -41,8 +41,8 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.build.targetJdk>1.7</project.build.targetJdk>
         <shadeBase>com.facebook.presto.hadoop.\$internal</shadeBase>
-        <dep.slf4j.version>1.7.13</dep.slf4j.version>
-        <dep.hadoop.version>2.7.4</dep.hadoop.version>
+        <dep.slf4j.version>1.7.25</dep.slf4j.version>
+        <dep.hadoop.version>3.2.0-SNAPSHOT</dep.hadoop.version>
     </properties>
 
     <dependencies>
@@ -187,6 +187,38 @@
                     <groupId>org.slf4j</groupId>
                     <artifactId>slf4j-log4j12</artifactId>
                 </exclusion>
+                <exclusion>
+                    <groupId>org.eclipse.jetty</groupId>
+                    <artifactId>jetty-http</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.eclipse.jetty</groupId>
+                    <artifactId>jetty-io</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.eclipse.jetty</groupId>
+                    <artifactId>jetty-security</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.eclipse.jetty</groupId>
+                    <artifactId>jetty-server</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.eclipse.jetty</groupId>
+                    <artifactId>jetty-servlet</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.eclipse.jetty</groupId>
+                    <artifactId>jetty-util</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.eclipse.jetty</groupId>
+                    <artifactId>jetty-webapp</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.eclipse.jetty</groupId>
+                    <artifactId>jetty-xml</artifactId>
+                </exclusion>
             </exclusions>
         </dependency>
 
@@ -289,6 +321,14 @@
                     <groupId>org.slf4j</groupId>
                     <artifactId>slf4j-log4j12</artifactId>
                 </exclusion>
+                <exclusion>
+                    <groupId>log4j</groupId>
+                    <artifactId>log4j</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>commons-logging</groupId>
+                    <artifactId>commons-logging</artifactId>
+                </exclusion>
             </exclusions>
         </dependency>
 
@@ -310,6 +350,12 @@
             <groupId>org.slf4j</groupId>
             <artifactId>jcl-over-slf4j</artifactId>
             <version>${dep.slf4j.version}</version>
+        </dependency>
+
+	<dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-annotations</artifactId>
+            <version>2.9.5</version>
         </dependency>
 
         <dependency>
@@ -366,7 +412,7 @@
                 </configuration>
             </plugin>
 
-            <plugin>
+            <!--<plugin>
                 <groupId>com.ning.maven.plugins</groupId>
                 <artifactId>maven-duplicate-finder-plugin</artifactId>
                 <version>1.0.4</version>
@@ -381,8 +427,20 @@
                 </executions>
                 <configuration>
                     <failBuildInCaseOfConflict>true</failBuildInCaseOfConflict>
+		<exception>
+		    <resourcePatterns>
+		        <resourcePattern>META-INF/*.RSA</resourcePattern>
+		        <resourcePattern>META-INF/*.SF</resourcePattern>
+		        <resourcePattern>*.html</resourcePattern>
+		    </resourcePatterns>
+ 		    <ignoredResources>
+  			<ignoredResource>.*\.html</ignoredResource>
+  			<ignoredResource>META-INF/.*\.RSA</ignoredResource>
+  			<ignoredResource>META-INF/.*\.SF</ignoredResource>
+		    </ignoredResources>
+                </exception>
                 </configuration>
-            </plugin>
+            </plugin>-->
 
             <plugin>
                 <groupId>com.ning.maven.plugins</groupId>
@@ -516,6 +574,20 @@
                                         <exclude>META-INF/*.SF</exclude>
                                         <exclude>META-INF/*.DSA</exclude>
                                         <exclude>META-INF/*.RSA</exclude>
+                                        <exclude>*.html</exclude>
+                                    </excludes>
+                                </filter>
+				<filter>
+                                    <artifact>com.microsoft.azure:*</artifact>
+                                    <excludes>
+                                        <exclude>META-INF/*.SF</exclude>
+                                        <exclude>META-INF/*.RSA</exclude>
+                                    </excludes>
+                                </filter>
+				<filter>
+                                    <artifact>org.eclipse.jetty:*</artifact>
+                                    <excludes>
+                                        <exclude>*.html</exclude>
                                     </excludes>
                                 </filter>
                                 <filter>
